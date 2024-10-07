@@ -3,6 +3,7 @@ package com.RESTAPIValidation.Rest.API.Validation.Project.Exception;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -31,5 +32,12 @@ public class ValidationExceptionHandler {
 
         // Return the map with validation errors and a BAD_REQUEST status
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> notValid(HttpMessageNotReadableException ex, HttpServletRequest request) {
+
+        // Return the map with validation errors and a BAD_REQUEST status
+        return new ResponseEntity<>("Error Occured", HttpStatus.BAD_REQUEST);
     }
 }
